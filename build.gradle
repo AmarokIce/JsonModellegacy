@@ -174,3 +174,28 @@ if (project.enableUsingKotlin.toBoolean()) {
         }
     }
 }
+
+tasks.register('deobfJar', Jar) {
+    dependsOn reobf
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    classifier 'deobf'
+
+    from sourceSets.main.output
+    manifest.attributes(jar.manifest.getAttributes())
+}
+
+tasks.register('sourcesJar', Jar) {
+    dependsOn classes
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    classifier 'deobf-sources'
+
+    from sourceSets.main.allSource
+    exclude "assets"
+    exclude "methods.bin"
+    exclude "McpToSrg.csv"
+}
+
+artifacts {
+    archives deobfJar
+    archives sourcesJar
+}
