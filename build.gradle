@@ -122,7 +122,7 @@ processResources {
 }
 
 jar {
-    from file("./LICENSE")
+    from file("./LICENSE.txt")
 }
 
 if (project.enableUsingMixin.toBoolean()) {
